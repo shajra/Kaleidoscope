@@ -1,0 +1,71 @@
+VERSION 1
+
+KEYSWITCH A      0 0
+KEYSWITCH B      0 1
+KEYSWITCH FN     1 0
+
+# ==============================================================================
+# As a control, this test passes, and seems to work on a real keyboard
+
+NAME OneShot different level different key
+
+RUN 5 ms
+
+PRESS FN
+RUN 1 cycle
+
+PRESS B
+RUN 1 cycle
+
+EXPECT keyboard-report Key_RightShift
+
+RELEASE B
+RUN 1 cycle
+
+RELEASE FN
+RUN 1 cycle
+
+PRESS A
+RUN 1 cycle
+
+EXPECT keyboard-report Key_A Key_RightShift
+EXPECT keyboard-report Key_A
+
+RELEASE A
+RUN 1 cycle
+
+EXPECT keyboard-report empty
+
+# ==============================================================================
+# This test fails, but illustrates a functionality I want
+
+NAME OneShot different level same key
+
+RUN 5 ms
+
+PRESS FN
+RUN 1 cycle
+
+PRESS A
+RUN 1 cycle
+
+EXPECT keyboard-report Key_LeftShift
+
+RELEASE A
+RUN 1 cycle
+
+RELEASE FN
+RUN 1 cycle
+
+PRESS A
+RUN 1 cycle
+
+# Comment out these two EXPECT lines, and the test passes, but that's not the
+# behavior I want to expect.
+EXPECT keyboard-report Key_A Key_LeftShift
+EXPECT keyboard-report Key_A
+
+RELEASE A
+RUN 1 cycle
+
+EXPECT keyboard-report empty
