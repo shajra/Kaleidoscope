@@ -6,6 +6,12 @@ KEYSWITCH FN     1 0
 
 # ==============================================================================
 # As a control, this test passes, and seems to work on a real keyboard
+#
+# Prose explanation: Keys A and B are normal keys on one level, but we have
+# one-shot modifiers for both on the layer above.  FN gets us to that layer.
+# This testcase illustrates that we can us the level-above one-shot modifier of
+# the "other" key.  Specifically, we use the modifier for B in layer 1 with A on
+# layer 0.
 
 NAME OneShot different level different key
 
@@ -38,6 +44,14 @@ EXPECT keyboard-report empty
 
 # ==============================================================================
 # This test fails, but illustrates a functionality I want
+#
+# Prose explanation: This test case is very similar to the one above, with one
+# critical difference.  This time, we're trying to use the one-shot modifier in
+# level 1 for key A with the same key A in the lower level 0.  This works in
+# QMK, so it seems like it should be in the realm of possibility.  I also think
+# it's a desireable behavior, because I don't believe there's any user-facing
+# explanation of how OneShot works that explains why this isn't or shouldn't be
+# possible.
 
 NAME OneShot different level same key
 
